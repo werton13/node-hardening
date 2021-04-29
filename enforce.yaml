@@ -1,0 +1,22 @@
+---
+  - hosts: k8snodes
+    gather_facts: false
+    become: true     
+    pre_tasks:
+      - name: update node
+        apt:
+          update_cache: yes
+    tasks:
+      - name: change default ssh port
+        lineinfile:
+          path: /etc/ssh/sshd_config
+          regexp: "^#Port"
+          line: "Port 41289"
+        notify: restart ssh
+      - name: do something
+        debug:
+          msg: "some shit"
+    handlers:
+     - name: restart ssh
+       service: name=sshd state=restarted
+...
