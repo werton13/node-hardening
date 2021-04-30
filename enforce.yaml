@@ -11,7 +11,7 @@
         lineinfile:
           path: /etc/ssh/sshd_config
           regexp: "^#Port"
-          line: "Port 41289"
+          line: "Port {{ ssh_port }}"
         notify: restart ssh
       - name: do something
         debug:
